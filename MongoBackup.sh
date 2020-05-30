@@ -10,7 +10,7 @@
 # Required Configuration #
 ##########################
 # General
-  WORKDIR="/home/ubuntu"
+  WORKDIR="~/Downloads/mongodb"
   BACKUP_DIR="${WORKDIR}/backups"
   INSTANCE_NAME=`hostname`
 # MongoDB Connector
@@ -25,7 +25,7 @@
   # Year/Mon/Day/HostName
   S3_BUCKET_PATH=`date +'%Y'`"/"`date +'%b'`"/"`date +'%d'`/${INSTANCE_NAME}
 # Other defaults
-  FILE_NAME_FORMAT="mongodump_"`date '+%F-%H%M'`".dump"
+  FILE_NAME_FORMAT="mongodump_"${MONGO_DATABASE}`date '+%F-%H%M'`".dump"
   LOCKFILE="${BACKUP_DIR}/.mongobackup.lock"
   LOGFILE="${BACKUP_DIR}/mongobackup.log"
   LOGTOFILE="false"
@@ -54,7 +54,7 @@ OPTIONS:
 EOF
 }
 
-while getopts ":l:h:w:k:b:n:p:" OPTION
+while getopts ":l:h:w:k:b:n:p:d:" OPTION
 do
   case $OPTION in
     h)
@@ -63,6 +63,9 @@ do
       ;;
     w)
       WORKDIR=$OPTARG
+      ;;
+    d)
+      MONGO_DATABASE=$OPTARG
       ;;
     n)
       INSTANCE_NAME=$OPTARG
@@ -242,4 +245,3 @@ runCommand aws s3 cp "${DUMPFILE}.tar.gz" "s3://${S3_BUCKET_NAME}/${S3_BUCKET_PA
 cleanup
 
 log "Backup complete"
-
