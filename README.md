@@ -11,7 +11,7 @@ Key features:
 ### Getting Started
 * Setup a bucket on AWS S3
 * Install required packages
-  
+
 It's highly recommended to set a lifecycle policy on the bucket to expire files older than X days.  
 In my case, I prefer to archive older backups to Glacier, which is much less expensive storage.  
 
@@ -51,25 +51,28 @@ usage: ./MongoBackup.sh options
 OPTIONS:
     -b    AWS S3 Bucket Name
           Bucket to store the backups (eg. db.backups)
-          
+
     -w    Work directory path
           Path to store local copies (see -k flag)
-          By default: /home/ubuntu
-          
+          By default: ~/mongodb
+
+    -w    Database name
+          Default is empty - mongodump without db
+
     -n    Instance Name
           Name of MongoDB instance
           By defult: hostname
-          
+
     -l    Log to file Flag
           Will only log to file
           By default: write to STDOUT
-          
+
     -k    Keep local copies
           Number of local copies to keep
           By default: 0
-          
+
     -r    AWS S3 Region (optional)
-    
+
     -p    Path / Folder inside the bucket (optional)
           By default: BucketName/Year/Mon/Day/InstanceName
 ```

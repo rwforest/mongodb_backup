@@ -50,6 +50,7 @@ OPTIONS:
     -k    Keep local copies (default: 0)
     -r    AWS S3 Region (optional)
     -p    Path / Folder inside the bucket (optional)
+    -d    Database name (optional)
 
 EOF
 }
@@ -66,6 +67,7 @@ do
       ;;
     d)
       MONGO_DATABASE=$OPTARG
+      FILE_NAME_FORMAT="mongodump_"${MONGO_DATABASE}`date '+%F-%H%M'`".dump"
       ;;
     n)
       INSTANCE_NAME=$OPTARG
