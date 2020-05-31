@@ -22,8 +22,6 @@
 # Backup behavior
   STORE_LOCAL_COPIES=0
   S3_BUCKET_NAME=
-  # Year/Mon/Day/HostName
-  S3_BUCKET_PATH=`date +'%Y'`"/"`date +'%b'`"/"`date +'%d'`/${INSTANCE_NAME}
 # Other defaults
   FILE_NAME_FORMAT="mongodump_"${MONGO_DATABASE}`date '+%F-%H%M'`".dump"
   LOCKFILE="${BACKUP_DIR}/.mongobackup.lock"
@@ -67,11 +65,11 @@ do
       ;;
     d)
       MONGO_DATABASE=$OPTARG
-      FILE_NAME_FORMAT="mongodump_"${MONGO_DATABASE}`date '+%F-%H%M'`".dump"
+      FILE_NAME_FORMAT="mongodump_"${MONGO_DATABASE}"_"`date '+%F-%H%M'`".dump"
       ;;
     n)
       INSTANCE_NAME=$OPTARG
-      S3_BUCKET_PATH=`date +'%Y'`"/"`date +'%b'`"/"`date +'%d'`/${INSTANCE_NAME}
+      S3_BUCKET_PATH=`date +'%Y'`"/"`date +'%b'`"/"`date +'%d'`
       ;;
     l)
       LOGTOFILE="true"
